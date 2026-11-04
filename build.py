@@ -131,10 +131,12 @@ def render_club(club, theme, prefix="../../"):
     for i in range(3):
         if i < len(photos):
             src = "%sassets/photos/%s/%s" % (prefix, club["slug"], photos[i])
+            alt = "%s — photo %d" % (name, i + 1)
             tiles.append(
-                '<div class="shot"><span>Photo %d</span>'
-                '<img src="%s" alt="%s — photo %d" loading="lazy"></div>'
-                % (i + 1, esc(src), esc(name), i + 1)
+                '<button type="button" class="shot" data-full="%s" data-alt="%s" '
+                'aria-label="Agrandir : %s"><span>Photo %d</span>'
+                '<img src="%s" alt="%s" loading="lazy"></button>'
+                % (esc(src), esc(alt), esc(alt), i + 1, esc(src), esc(alt))
             )
         else:
             tiles.append('<div class="shot"><span>Photo %d</span></div>' % (i + 1))
@@ -151,6 +153,9 @@ def render_club(club, theme, prefix="../../"):
     desc = club.get("description") or ""
     meta_desc = (desc.split("\n")[0][:155] if desc else
                  "Fiche du club %s de l'ISAMM." % name)
+
+    script = ('<script src="%sassets/js/lightbox.js" defer></script>\n' % prefix
+              if photos else "")
 
     return f"""{head(name + " — Clubs de l'ISAMM", meta_desc, prefix)}
 <main class="page">
@@ -214,7 +219,7 @@ def render_club(club, theme, prefix="../../"):
 
   </article>
 </main>
-</body>
+{script}</body>
 </html>
 """
 
