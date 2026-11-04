@@ -191,11 +191,6 @@ def render_club(club, theme, prefix="../../"):
       </section>
 
       <section class="field">
-        <h2>Adhérents</h2>
-        <div class="box alt">{line(club.get('adherents'))}</div>
-      </section>
-
-      <section class="field">
         <h2>Activités</h2>
         <div class="box tall">
           {paragraphs(club.get('activites'))}
