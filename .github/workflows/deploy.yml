@@ -1,0 +1,65 @@
+name: Déploiement du site des clubs
+
+# Se déclenche à chaque push sur main, et manuellement depuis l'onglet Actions.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Droits nécessaires au déploiement GitHub Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un seul déploiement à la fois ; si deux push se suivent, le plus récent
+# gagne. On ne coupe pas un déploiement déjà lancé (cancel-in-progress: false).
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Génération du site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupération du dépôt
+        uses: actions/checkout@v4
+
+      - name: Installation de Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installation de segno
+        run: pip install segno
+
+      # Ne génère que les QR codes manquants : un code déjà présent (donc
+      # peut-être déjà imprimé) n'est jamais réécrit. Pour tout régénérer,
+      # lancer tools/make_qr.py en local sans l'option.
+      - name: QR codes des nouveaux clubs
+        run: python tools/make_qr.py --missing-only
+
+      # Régénère index.html et les c/<slug>/index.html depuis data/clubs.json.
+      - name: Génération des pages
+        run: python build.py
+
+      - name: Configuration de Pages
+        uses: actions/configure-pages@v5
+
+      - name: Préparation de l'archive
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    name: Mise en ligne
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déploiement sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

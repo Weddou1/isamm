@@ -1,0 +1,588 @@
+/* ==========================================================================
+   Les clubs de l'ISAMM — feuille de style unique
+   Reproduction de la maquette Figma (artboards 1080x1920 et 1920x1080).
+   Toutes les mesures sont exprimées en "unités maquette" :
+     --s  = 1 px de l'artboard fiche  (1080 de large)
+     --s2 = 1 px de l'artboard accueil (1920 de large)
+     --sc = 1 px d'une carte club      (401 de large)
+   ========================================================================== */
+
+:root {
+  /* palette relevée au pixel près sur la maquette */
+  --teal: #00a8c0;
+  --teal-soft: #2db7cb;
+  --orange: #fb5a1a;
+  --orange-soft: #fb7742;
+  --green: #7dd3a0;
+  --green-soft: #93dab0;
+  --blue: #3373c4;
+  --blue-soft: #578bce;
+  --navy: #162e6a;
+  --navy-soft: #3f5284;
+  --indigo: #4568b0;
+  --indigo-soft: #6582bd;
+
+  --ink: #162e6a;
+  --ink-title: #2a2a5c;
+  --accent: #fb5a1a;
+  --field-a: #ececec;
+  --field-b: #f6f6f6;
+  --photo: #c2e5f4;
+  --card-border: #e1e8f0;
+
+  --font: "Poppins", "Montserrat", "Segoe UI", system-ui, -apple-system,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+
+/* ==========================================================================
+   FICHE CLUB  (artboard 1080 x 1920)
+   ========================================================================== */
+
+.page {
+  width: min(100%, 820px);
+  margin-inline: auto;
+  container-type: inline-size;
+}
+
+.sheet {
+  --s: 0.0925926cqw; /* 100 / 1080 */
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* --- bandeau coloré --------------------------------------------------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(var(--s) * 210);
+  padding: calc(var(--s) * 62) calc(var(--s) * 62) calc(var(--s) * 40);
+  background: var(--c, var(--teal));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* le disque clair en haut à droite : centre (1000,40) r 89 */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--s) * 911);
+  top: calc(var(--s) * -49);
+  width: calc(var(--s) * 178);
+  height: calc(var(--s) * 178);
+  border-radius: 50%;
+  background: var(--c-soft, var(--teal-soft));
+}
+
+.hero > * { position: relative; z-index: 1; }
+
+.hero h1 {
+  margin: 0;
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(26px, calc(var(--s) * 68), 68px);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.hero-sub {
+  margin: calc(var(--s) * 10) 0 0;
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(10px, calc(var(--s) * 20), 20px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* --- champs ------------------------------------------------------------ */
+
+.fields { padding: calc(var(--s) * 58) calc(var(--s) * 60) 0; }
+
+.field + .field { margin-top: calc(var(--s) * 34); }
+
+.field > h2 {
+  margin: 0 0 calc(var(--s) * 18);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: clamp(11px, calc(var(--s) * 20), 20px);
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.box {
+  min-height: calc(var(--s) * 54);
+  padding: calc(var(--s) * 14) calc(var(--s) * 21);
+  border-radius: calc(var(--s) * 10);
+  background: var(--field-a);
+  color: var(--ink);
+  font-size: clamp(14px, calc(var(--s) * 24), 24px);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.box.alt { background: var(--field-b); }
+
+.box.tall { min-height: calc(var(--s) * 110); }
+
+.box p { margin: 0; }
+.box p + p { margin-top: 0.75em; }
+
+.box .muted { color: #8b93a6; }
+
+.box dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: calc(var(--s) * 6) calc(var(--s) * 14);
+}
+
+.box dt {
+  color: #6f7993;
+  font-size: 0.78em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  align-self: center;
+}
+
+.box dd { margin: 0; align-self: center; }
+
+.box a { color: inherit; text-decoration-color: #b9c0d1; }
+
+/* --- galerie ----------------------------------------------------------- */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(var(--s) * 16);
+}
+
+.shot {
+  position: relative;
+  aspect-ratio: 310 / 230;
+  border-radius: calc(var(--s) * 14);
+  background: var(--photo);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.shot span {
+  color: var(--ink);
+  font-weight: 700;
+  font-size: clamp(10px, calc(var(--s) * 20), 20px);
+}
+
+.shot img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- bouton ------------------------------------------------------------ */
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: calc(var(--s) * 54);
+  min-height: calc(var(--s) * 84);
+  padding: calc(var(--s) * 18) calc(var(--s) * 28);
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(13px, calc(var(--s) * 24), 24px);
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.cta:hover { filter: brightness(1.06); transform: translateY(-1px); }
+.cta:active { transform: translateY(0); }
+
+/* --- pied de page décoratif -------------------------------------------- */
+
+.deco {
+  position: relative;
+  height: calc(var(--s) * 216);
+}
+
+.deco i {
+  position: absolute;
+  display: block;
+}
+
+.deco .bl {
+  left: 0;
+  bottom: 0;
+  width: calc(var(--s) * 80);
+  height: calc(var(--s) * 80);
+  border-top-right-radius: 100%;
+  background: var(--photo);
+}
+
+.deco .sq {
+  left: calc(var(--s) * 800);
+  bottom: 0;
+  width: calc(var(--s) * 70);
+  height: calc(var(--s) * 70);
+  background: var(--navy);
+}
+
+.deco .ci {
+  left: calc(var(--s) * 930);
+  bottom: calc(var(--s) * 12);
+  width: calc(var(--s) * 58);
+  height: calc(var(--s) * 58);
+  border-radius: 50%;
+  background: var(--green);
+}
+
+/* lien de retour discret, hors maquette */
+.back {
+  position: absolute;
+  right: calc(var(--s) * 60);
+  bottom: calc(var(--s) * 96);
+  color: #9aa3b8;
+  font-size: clamp(11px, calc(var(--s) * 18), 18px);
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.back:hover { color: var(--ink); }
+
+/* ==========================================================================
+   ACCUEIL  (artboard 1920 x 1080)
+   ========================================================================== */
+
+.poster {
+  --s2: min(0.0520833cqw, 1px); /* 100 / 1920, plafonné à l'échelle 1:1 */
+  position: relative;
+  overflow: hidden;
+  width: min(100%, 1920px);
+  margin-inline: auto;
+  padding: calc(var(--s2) * 60) calc(var(--s2) * 100) calc(var(--s2) * 80);
+  container-type: inline-size;
+}
+
+/* conteneur extérieur pour que --s2 se calcule sur la largeur du poster */
+.home { container-type: inline-size; }
+
+.masthead {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, calc(var(--s2) * 30), 30px);
+  z-index: 1;
+}
+
+.masthead .isamm {
+  width: clamp(120px, calc(var(--s2) * 286), 286px);
+  height: auto;
+  flex: none;
+}
+
+.masthead h1 {
+  margin: 0;
+  color: var(--ink-title);
+  font-weight: 800;
+  font-size: clamp(34px, calc(var(--s2) * 96), 96px);
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.masthead .sub {
+  margin: calc(var(--s2) * 16) 0 0;
+  color: var(--teal);
+  font-weight: 700;
+  font-size: clamp(16px, calc(var(--s2) * 34), 34px);
+  letter-spacing: 0.02em;
+}
+
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(12px, calc(var(--s2) * 36), 36px);
+  margin: calc(var(--s2) * 24) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  display: flex;
+  align-items: center;
+  gap: clamp(5px, calc(var(--s2) * 12), 12px);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: clamp(11px, calc(var(--s2) * 22), 22px);
+  letter-spacing: 0.06em;
+}
+
+.steps i {
+  width: clamp(7px, calc(var(--s2) * 14), 14px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--d);
+}
+
+.lede {
+  position: relative;
+  z-index: 1;
+  margin: clamp(18px, calc(var(--s2) * 56), 56px) 0
+    clamp(16px, calc(var(--s2) * 40), 40px);
+  color: var(--green);
+  font-weight: 700;
+  font-size: clamp(15px, calc(var(--s2) * 28), 28px);
+}
+
+/* décor coin haut droit */
+.poster-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.poster-deco i { position: absolute; display: block; border-radius: 50%; }
+
+.poster-deco .blob {
+  left: calc(var(--s2) * 1713);
+  top: calc(var(--s2) * -39);
+  width: calc(var(--s2) * 416);
+  height: calc(var(--s2) * 416);
+  background: var(--green);
+}
+
+.poster-deco .ring {
+  left: calc(var(--s2) * 1559);
+  top: calc(var(--s2) * -66);
+  width: calc(var(--s2) * 239);
+  height: calc(var(--s2) * 239);
+  border: calc(var(--s2) * 5) solid var(--green);
+  background: none;
+}
+
+.poster-deco .dot {
+  left: calc(var(--s2) * 1606);
+  top: calc(var(--s2) * 25);
+  width: calc(var(--s2) * 88);
+  height: calc(var(--s2) * 88);
+  background: var(--orange);
+}
+
+/* --- grille des clubs --------------------------------------------------- */
+
+.grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: calc(var(--s2) * 24) calc(var(--s2) * 39);
+}
+
+.card {
+  container-type: inline-size;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* le dimensionnement vit sur .card-in : les unités cq d'un conteneur se
+   résolvent sur son parent, pas sur lui-même. */
+.card-in {
+  --sc: 0.2493766cqw; /* 100 / 401 */
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: calc(var(--sc) * 24);
+  height: 100%;
+  min-height: calc(var(--sc) * 191);
+  padding: calc(var(--sc) * 22) calc(var(--sc) * 23);
+  border: 2px solid var(--card-border);
+  border-radius: calc(var(--sc) * 18);
+  background: #fff;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.card:hover .card-in {
+  border-color: var(--c);
+  box-shadow: 0 10px 28px rgba(22, 46, 106, 0.1);
+  transform: translateY(-2px);
+}
+
+.frame {
+  width: calc(var(--sc) * 116);
+  height: calc(var(--sc) * 116);
+  flex: none;
+  display: grid;
+  /* le liseré blanc entre le logo et le contour coloré */
+  padding: calc(var(--sc) * 7);
+  border: calc(var(--sc) * 3) solid var(--c);
+  border-radius: calc(var(--sc) * 24);
+  background: #fff;
+}
+
+.frame.round { border-radius: 50%; }
+
+.frame-fill {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: calc(var(--sc) * 5);
+  border-radius: calc(var(--sc) * 16);
+  overflow: hidden;
+}
+
+.frame.round .frame-fill { border-radius: 50%; }
+
+/* logo détouré : il flotte sur le blanc de la carte */
+.frame-fill img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* logo « tuile pleine » : sa propre couleur remplit la pastille */
+.frame.bleed .frame-fill {
+  padding: 0;
+  background: var(--lb, #fff);
+}
+
+.frame.bleed .frame-fill img { object-fit: cover; }
+
+.frame .initials {
+  color: var(--c);
+  font-weight: 800;
+  font-size: calc(var(--sc) * 30);
+  letter-spacing: 0.02em;
+}
+
+.card-body { min-width: 0; }
+
+.cname {
+  display: block;
+  padding-right: calc(var(--sc) * 70);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: calc(var(--sc) * 24);
+  line-height: 1.18;
+  overflow-wrap: normal;
+  hyphens: none;
+  text-wrap: balance;
+}
+
+.cabbr {
+  display: block;
+  margin-top: calc(var(--sc) * 4);
+  color: #8b93a6;
+  font-weight: 600;
+  font-size: calc(var(--sc) * 18);
+}
+
+.scan {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--sc) * 8);
+  margin-top: calc(var(--sc) * 14);
+  padding: calc(var(--sc) * 8) calc(var(--sc) * 18);
+  border-radius: 999px;
+  background: var(--c);
+  color: #fff;
+  font-weight: 700;
+  font-size: calc(var(--sc) * 16);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scan svg { width: calc(var(--sc) * 16); height: calc(var(--sc) * 16); }
+
+.qr {
+  position: absolute;
+  right: calc(var(--sc) * 19);
+  top: calc(var(--sc) * 20);
+  width: calc(var(--sc) * 66);
+  height: calc(var(--sc) * 66);
+  display: grid;
+  place-items: center;
+  border: calc(var(--sc) * 2) dashed var(--c);
+  border-radius: calc(var(--sc) * 6);
+  color: var(--c);
+  font-weight: 700;
+  font-size: calc(var(--sc) * 15);
+  letter-spacing: 0.04em;
+  overflow: hidden;
+}
+
+.qr img { width: 100%; height: 100%; object-fit: contain; }
+/* un vrai QR porte déjà sa zone de silence : ni cadre ni marge en plus */
+.qr.has-img {
+  right: calc(var(--sc) * 14);
+  top: calc(var(--sc) * 15);
+  width: calc(var(--sc) * 76);
+  height: calc(var(--sc) * 76);
+  border: 0;
+  padding: 0;
+}
+
+.poster-foot {
+  position: relative;
+  z-index: 1;
+  margin-top: clamp(18px, calc(var(--s2) * 44), 44px);
+  color: #9aa3b8;
+  font-size: clamp(11px, calc(var(--s2) * 18), 18px);
+}
+
+/* --- adaptations écrans étroits ---------------------------------------- */
+
+@media (max-width: 1240px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .masthead { flex-wrap: wrap; }
+}
+
+@media (max-width: 620px) {
+  .poster { padding: 26px 18px 40px; }
+  .grid { grid-template-columns: 1fr; gap: 12px; }
+  .masthead { gap: 14px; }
+  .masthead .isamm { width: 92px; }
+}
+
+@media print {
+  .card:hover { transform: none; box-shadow: none; }
+  .back { display: none; }
+}
