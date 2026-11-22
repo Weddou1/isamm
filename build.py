@@ -247,7 +247,8 @@ def render_home(site, clubs):
     cards = []
     for i, club in enumerate(clubs):
         color, _ = THEMES[i % len(THEMES)]
-        shape = "round" if i % 2 == 0 else ""
+        # toutes les pastilles sont rondes (plus d'alternance avec le carre arrondi)
+        shape = "round"
         logo = club.get("logo")
         if logo:
             inner = '<img src="assets/img/logos/%s" alt="Logo %s" loading="lazy">' % (

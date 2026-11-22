@@ -625,7 +625,8 @@ html.lb-open { overflow: hidden; }
   margin-top: calc(var(--sc) * 14);
   padding: calc(var(--sc) * 8) calc(var(--sc) * 18);
   border-radius: 999px;
-  background: var(--c);
+  /* meme bleu que l'encre des QR codes (tools/make_qr.py : DARK = #162e6a) */
+  background: var(--navy);
   color: #fff;
   font-weight: 700;
   font-size: max(12px, calc(var(--sc) * 16));
