@@ -501,9 +501,20 @@ html.lb-open { overflow: hidden; }
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* 8 demi-colonnes : une carte en occupe 2, ce qui donne exactement les
+     memes largeurs qu'une grille de 4 colonnes, mais permet de decaler
+     une ligne incomplete d'une demi-carte pour la centrer. */
+  grid-template-columns: repeat(8, 1fr);
   gap: calc(var(--s2) * 24) calc(var(--s2) * 39);
 }
+
+.grid > .card { grid-column: span 2; }
+
+/* derniere ligne incomplete de 3 cartes : on la centre.
+   La regle ne s'active que si l'avant-avant-derniere carte ouvre une ligne
+   (nth-child(4n+1)), donc elle se desactive d'elle-meme si le nombre de
+   clubs change. */
+.grid > .card:nth-last-child(3):nth-child(4n + 1) { grid-column: 2 / span 2; }
 
 .card {
   container-type: inline-size;
@@ -664,6 +675,8 @@ html.lb-open { overflow: hidden; }
 
 @media (max-width: 1240px) {
   .grid { grid-template-columns: repeat(3, 1fr); }
+  .grid > .card,
+  .grid > .card:nth-last-child(3):nth-child(4n + 1) { grid-column: auto; }
 }
 
 @media (max-width: 900px) {
