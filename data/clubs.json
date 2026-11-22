@@ -213,6 +213,57 @@
       "logo": "gamers.png",
       "logo_bleed": true,
       "logo_bg": "#87cdee"
+    },
+    {
+      "slug": "atia",
+      "name": "ATIA ISAMM",
+      "short": "ATIA ISAMM",
+      "abbr": "",
+      "email": "",
+      "domaine": "",
+      "cible": "",
+      "description": "",
+      "activites": "",
+      "adherents": "",
+      "responsable": "",
+      "referent": "",
+      "logo": "atia.png",
+      "logo_bleed": false,
+      "logo_bg": null
+    },
+    {
+      "slug": "roubla",
+      "name": "CIN Roubla ISAMM",
+      "short": "CIN Roubla ISAMM",
+      "abbr": "",
+      "email": "",
+      "domaine": "Sport, Athlétisme",
+      "cible": "",
+      "description": "",
+      "activites": "",
+      "adherents": "",
+      "responsable": "",
+      "referent": "",
+      "logo": "roubla.png",
+      "logo_bleed": false,
+      "logo_bg": null
+    },
+    {
+      "slug": "aiesec",
+      "name": "AIESEC Manouba",
+      "short": "AIESEC Manouba",
+      "abbr": "",
+      "email": "",
+      "domaine": "",
+      "cible": "",
+      "description": "",
+      "activites": "",
+      "adherents": "",
+      "responsable": "",
+      "referent": "",
+      "logo": "aiesec.png",
+      "logo_bleed": true,
+      "logo_bg": "#047ef3"
     }
   ]
 }
