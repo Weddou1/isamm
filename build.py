@@ -12,6 +12,7 @@ Sortie :
 Rien d'autre à faire : tout est statique, prêt pour GitHub Pages.
 """
 
+import hashlib
 import html
 import json
 import os
@@ -19,6 +20,20 @@ import shutil
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(ROOT, "data", "clubs.json")
+CSS = os.path.join(ROOT, "assets", "css", "style.css")
+
+
+def css_version():
+    """Empreinte du CSS, ajoutee en ?v=... pour que les navigateurs
+    rechargent la feuille de style des qu'elle change."""
+    try:
+        with open(CSS, "rb") as fh:
+            return hashlib.sha1(fh.read()).hexdigest()[:8]
+    except OSError:
+        return "0"
+
+
+CSS_VER = css_version()
 
 # rotation de couleurs de la maquette : teal, orange, vert, bleu, navy, indigo
 THEMES = [
@@ -91,7 +106,7 @@ def head(title, description, css_prefix, extra_body_class=""):
 <meta name="theme-color" content="#162e6a">
 <link rel="icon" href="{css_prefix}assets/img/isamm-logo.png">
 {FONTS}
-<link rel="stylesheet" href="{css_prefix}assets/css/style.css">
+<link rel="stylesheet" href="{css_prefix}assets/css/style.css?v={CSS_VER}">
 </head>
 <body class="{extra_body_class}">"""
 
