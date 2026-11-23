@@ -59,6 +59,11 @@ SCAN_ICON = (
     '<rect x="8" y="8" width="8" height="8" rx="1.5"/></svg>'
 )
 
+# Bloc « Responsables » des fiches : masqué pour l'instant. Passer à True pour
+# le faire revenir (les données `responsable`, `referent`, `email` restent dans
+# data/clubs.json).
+SHOW_RESPONSABLES = False
+
 PLACEHOLDER = '<p class="muted">À compléter</p>'
 
 
@@ -140,18 +145,31 @@ def render_club(club, theme, prefix="../../"):
     else:
         resp = PLACEHOLDER
 
+    resp_section = (
+        '''      <section class="field">
+        <h2>Responsables</h2>
+        <div class="box">%s</div>
+      </section>
+
+''' % resp
+        if SHOW_RESPONSABLES else ""
+    )
+
     # galerie
     photos = find_photos(club["slug"])
     tiles = []
     for i in range(3):
         if i < len(photos):
             src = "%sassets/photos/%s/%s" % (prefix, club["slug"], photos[i])
+            thumb = os.path.join(ROOT, "assets", "photos", club["slug"], "thumb", photos[i])
+            tsrc = ("%sassets/photos/%s/thumb/%s" % (prefix, club["slug"], photos[i])
+                    if os.path.exists(thumb) else src)
             alt = "%s — photo %d" % (name, i + 1)
             tiles.append(
                 '<button type="button" class="shot" data-full="%s" data-alt="%s" '
                 'aria-label="Agrandir : %s"><span>Photo %d</span>'
                 '<img src="%s" alt="%s" loading="lazy"></button>'
-                % (esc(src), esc(alt), esc(alt), i + 1, esc(src), esc(alt))
+                % (esc(src), esc(alt), esc(alt), i + 1, esc(tsrc), esc(alt))
             )
         else:
             tiles.append('<div class="shot"><span>Photo %d</span></div>' % (i + 1))
@@ -205,12 +223,7 @@ def render_club(club, theme, prefix="../../"):
         </div>
       </section>
 
-      <section class="field">
-        <h2>Responsables</h2>
-        <div class="box">{resp}</div>
-      </section>
-
-      <section class="field">
+{resp_section}      <section class="field">
         <h2>Activités</h2>
         <div class="box tall">
           {paragraphs(club.get('activites'))}

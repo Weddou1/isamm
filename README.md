@@ -169,10 +169,27 @@ de ne pas relancer le script ensuite, il les réécrirait.
 
 ## Ajouter les photos d'un club
 
-Déposer 1 à 3 images dans `assets/photos/<slug>/` (jpg, png ou webp), puis
-relancer `python3 build.py`. Elles remplacent les cases « Photo 1/2/3 » dans
-l'ordre alphabétique des noms de fichiers — le plus simple est de les nommer
-`1.jpg`, `2.jpg`, `3.jpg`.
+Les photos arrivent dans tous les formats (jpg, png, HEIC d'iPhone, très
+grandes ou minuscules, portrait ou paysage). Le script les uniformise :
+
+```bash
+pip install pillow pillow-heif
+python3 tools/prep_photos.py <dossier_source>   # un sous-dossier par club
+python3 build.py
+```
+
+Pour chaque club, il écrit dans `assets/photos/<slug>/` :
+
+- `1.jpg`, `2.jpg`, `3.jpg` : version complète (côté long ≤ 1800 px, JPEG),
+  affichée à l'agrandissement ;
+- `thumb/1.jpg`… : vignette 800×594 au format exact des cases de la fiche.
+
+Les photos en paysage sont recadrées ; les portraits, affiches et logos ne sont
+jamais coupés (fond flou, ou blanc pour un logo). La correspondance entre
+dossier source et slug, l'ordre des photos et les rotations à forcer sont
+décrits en tête de `tools/prep_photos.py`. À la main, il suffit de déposer
+`1.jpg`, `2.jpg`, `3.jpg` (et éventuellement `thumb/`) puis de relancer
+`build.py`.
 
 ---
 
@@ -191,6 +208,7 @@ data/clubs.json            contenu éditable
 build.py                   générateur (sans dépendance)
 tools/detect_logo_bg.py    détection du fond des logos (Pillow)
 tools/make_qr.py           génération des QR codes (segno)
+tools/prep_photos.py       uniformisation des photos (Pillow, pillow-heif)
 ```
 
 ## Notes
